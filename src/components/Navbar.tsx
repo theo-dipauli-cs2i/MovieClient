@@ -1,7 +1,7 @@
 export function Navbar() {
     return (
         <>
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
                 <div class="container-fluid">
                     <img class="img-fluid me-2" src="/preact.svg" alt="" />
                     <a class="navbar-brand" href="/">Navbar</a>

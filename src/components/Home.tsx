@@ -4,6 +4,7 @@ export function Home() {
     return (
         <>
             <div class="container">
+                <h1 class={"my-3"}>Movie API client</h1>
                 <Navbar />
                 <div class="row">
                     <div class="col-3 d-flex justify-content-center">
