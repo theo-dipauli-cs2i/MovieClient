@@ -1,8 +1,43 @@
+import { useState } from "preact/hooks"
+import type { ApiResponse } from "../types/ApiResponse"
+import { FetchComponent } from "./FetchComponent"
+
 export function Countries() {
+    const [response, setResponse] = useState<ApiResponse | null>(null)
+    const URL = "http://10.205.47.2:3002/v2/countries"
+
     return (
         <>
-            <h1>Countries</h1>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. In doloremque, minima incidunt enim molestias ea earum quidem iusto magnam aut quis illo aliquid vitae repellat? Nam aliquam deleniti expedita consequatur consequuntur eos? Quidem eveniet, atque ipsum vero porro voluptates, inventore fugiat quis officia possimus magnam sit fugit recusandae doloremque veritatis veniam voluptatem quos repellat tempora optio aut id. Voluptatem molestiae aspernatur numquam quas. Voluptatem, tempora. Modi aliquid ut eum perferendis cumque quaerat praesentium magni minima?</p>
+            <FetchComponent
+                url={URL}
+                onData={setResponse}
+            />
+            {response && (
+                <>
+                    <h1>Genres</h1>
+                    <div className="d-inline-flex align-items-center mb-2">
+                        <span className="badge rounded-pill bg-primary">
+                            items: {response.itemCount}
+                        </span>
+                    </div>
+                    <table className="table table-striped w-auto">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Countries</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {Array.isArray(response.data) && response.data.map((countries: string, idx: number) => (
+                                <tr key={countries}>
+                                    <td>{idx + 1}</td>
+                                    <td>{countries.trim() ? countries : "not defined"}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </>
+            )}
         </>
     )
 }

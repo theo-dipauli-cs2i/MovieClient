@@ -10,7 +10,8 @@
   },
   "dependencies": {
     "preact": "^10.26.5",
-    "preact-iso": "^2.9.1"
+    "preact-iso": "^2.9.1",
+    "react-fetch-hook": "^1.9.5"
   },
   "devDependencies": {
     "@preact/preset-vite": "^2.10.1",

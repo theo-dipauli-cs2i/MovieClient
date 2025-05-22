@@ -4,6 +4,7 @@ import { Navbar } from './components/Navbar'
 import { Genres } from './components/Genres'
 import { Countries } from './components/Countries'
 import { NotFound } from './components/NotFound'
+import { Movies } from './components/Movies'
 
 export function App() {
   return (
@@ -14,6 +15,7 @@ export function App() {
         <ErrorBoundary>
           <Router>
             <Route path="/" component={Home} />
+            <Route path="/movies" component={Movies} />
             <Route path="/genres" component={Genres} />
             <Route path="/countries" component={Countries} />
             <Route component={NotFound} default />

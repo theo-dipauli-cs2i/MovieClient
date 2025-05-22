@@ -1,17 +1,23 @@
-import { useState } from "preact/hooks";
+import { useState, useEffect } from "preact/hooks";
 
 export function ThemeSwitcher() {
-  const [dark, setDark] = useState(false);
+
+  const [dark, setDark] = useState(() => {
+    return localStorage.getItem("theme") === "dark";
+  });
+
+  useEffect(() => {
+    document.body.setAttribute("data-bs-theme", dark ? "dark" : "light");
+    localStorage.setItem("theme", dark ? "dark" : "light");
+  }, [dark]);
+
   function toggleDarkMode() {
-    setDark((d) => {
-      const newTheme = !d;
-      document.body.setAttribute("data-bs-theme", newTheme ? "dark" : "light");
-      return newTheme;
-    });
+    setDark((d) => !d);
   }
 
   return (
-    <button class="btn btn-outline-secondary ms-auto"
+    <button
+      class="btn btn-outline-secondary ms-auto"
       type="button"
       onClick={toggleDarkMode}
     >
