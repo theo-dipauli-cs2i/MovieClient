@@ -19,7 +19,8 @@ type Movie = {
 export function Movies() {
     const [response, setResponse] = useState<ApiResponse | null>(null);
     const [openDetails, setOpenDetails] = useState(false);
-    const URL = "http://10.205.47.2:3002/v2/movies?page=1&pageSize=10";
+    const [page, setPage] = useState(1);
+    const URL = `http://10.205.47.2:3002/v2/movies?page=${page}`;
 
     function parseMovie(data: any): Movie | null {
         if (!data) return null;
@@ -50,16 +51,55 @@ export function Movies() {
                         <h1>Movies</h1>
                         <div className="d-inline-flex align-items-center mb-2">
                             <span className="badge rounded-pill bg-primary">
-                                items: {response.pageSize}
+                                items: {response.itemCount}
                             </span>
                         </div>
+                        <nav aria-label="Page navigation example">
+                            <ul className="pagination user-select-none">
+                                <li className={`page-item${page === 1 ? " disabled" : ""}`}>
+                                    <button type="button" className="page-link" onClick={() => page > 1 && setPage(1)} tabIndex={page === 1 ? -1 : 0} disabled={page === 1}>&lt;&lt;</button>
+                                </li>
+                                <li className={`page-item${page === 1 ? " disabled" : ""}`}>
+                                    <button type="button" className="page-link" onClick={() => page > 1 && setPage(page - 1)} tabIndex={page === 1 ? -1 : 0} disabled={page === 1}>&lt;</button>
+                                </li>
+                                {(() => {
+                                    const pages = [];
+                                    const total = response.pages;
+                                    let start = Math.max(1, page - 2);
+                                    let end = Math.min(total, start + 4);
+                                    if (end - start < 4) {
+                                        start = Math.max(1, end - 4);
+                                    }
+                                    for (let p = start; p <= end; p++) {
+                                        pages.push(
+                                            <li key={p} className={`page-item${p === page ? " active" : ""}`}>
+                                                <button
+                                                    type="button"
+                                                    className="page-link"
+                                                    onClick={() => setPage(p)}
+                                                >
+                                                    {p}
+                                                </button>
+                                            </li>
+                                        );
+                                    }
+                                    return pages;
+                                })()}
+                                <li className={`page-item${page === response.pages ? " disabled" : ""}`}>
+                                    <button type="button" className="page-link" onClick={() => page < response.pages && setPage(page + 1)} tabIndex={page === response.pages ? -1 : 0} disabled={page === response.pages}>&gt;</button>
+                                </li>
+                                <li className={`page-item${page === response.pages ? " disabled" : ""}`}>
+                                    <button type="button" className="page-link" onClick={() => page < response.pages && setPage(response.pages)} tabIndex={page === response.pages ? -1 : 0} disabled={page === response.pages}>&gt;&gt;</button>
+                                </li>
+                            </ul>
+                        </nav>
                         <div className="d-flex justify-content-end">
                             <button className="btn btn-outline-primary mb-2" onClick={toggleDetails}>
                                 {openDetails ? "-" : "+"}
                             </button>
                         </div>
                     </div>
-                    <div className="row d-flex align-items-stretch">
+                    <div className="row row-cols-1 row-cols-md-3 g-4">
                         {response.data.map((rawMovie: any, idx: number) => {
                             const movie = parseMovie(rawMovie);
                             if (!movie) return null;
@@ -72,8 +112,8 @@ export function Movies() {
                             }
 
                             return (
-                                <div className="col-md-4 mb-4" key={movie.movie_title + idx}>
-                                    <div className="card h-100" style={{ width: "18rem" }}>
+                                <div className="col h-100" key={movie.movie_title + idx}>
+                                    <div className="card h-100">
                                         <div className="card-header d-flex justify-content-between align-items-center">
                                             <h2 className="mb-0">{movie.movie_title}</h2>
                                             <br />
@@ -115,7 +155,7 @@ export function Movies() {
                                             )}
                                         </ul>
                                         <div className="card-footer">
-                                            <a href={movie.movie_imdb_link} className="btn btn-primary" target="_blank" rel="noopener noreferrer">
+                                            <a href={movie.movie_imdb_link} className="btn btn-outline-secondary" target="_blank" rel="noopener noreferrer">
                                                 Details on IMDB
                                             </a>
                                         </div>
@@ -124,6 +164,7 @@ export function Movies() {
                             );
                         })}
                     </div>
+
                 </>
             )}
         </>
