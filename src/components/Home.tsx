@@ -1,13 +1,9 @@
-import { Navbar } from "./Navbar"
 import preactLogo from '../assets/preact.svg';
 import viteLogo from '../assets/vite.svg';
 
 export function Home() {
     return (
         <>
-            <div class="container">
-                <h1 class={"my-3"}>Movie API client</h1>
-                <Navbar />
                 <div class="row">
                     <div class="col-3 d-flex justify-content-center">
                         <img class="img-fluid w-75" src={preactLogo} alt="" />
@@ -20,7 +16,6 @@ export function Home() {
                         <img class="img-fluid w-75" src={viteLogo} alt="" />
                     </div>
                 </div>
-            </div>
         </>
     )
 }

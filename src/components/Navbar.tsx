@@ -1,9 +1,11 @@
 import preactLogo from '../assets/preact.svg';
+import { ThemeSwitcher } from './ThemeSwitcher';
 
 export function Navbar() {
+
     return (
         <>
-            <nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
+            <nav class={`navbar navbar-expand-lg mb-3`}>
                 <div class="container-fluid">
                     <img class="img-fluid me-2" src={preactLogo} alt="" />
                     <a class="navbar-brand" href="/">Navbar</a>
@@ -11,12 +13,18 @@ export function Navbar() {
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                        <ul class="navbar-nav">
+                        <ul class="navbar-nav me-auto">
                             <li class="nav-item">
                                 <a class="nav-link" href="/">Home</a>
                             </li>
-
+                            <li class="nav-item">
+                                <a class="nav-link" href="/genres">Genres</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/countries">Countries</a>
+                            </li>
                         </ul>
+                        <ThemeSwitcher />
                     </div>
                 </div>
             </nav>
